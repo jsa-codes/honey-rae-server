@@ -59,6 +59,10 @@ class ServiceTicketView(ViewSet):
 
         """
         service_ticket = ServiceTicket.objects.get(pk=pk)
+        service_ticket.delete()
+
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
+        
 
 
 
