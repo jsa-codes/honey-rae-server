@@ -18,7 +18,6 @@ class ServiceTicketView(ViewSet):
 
         service_tickets = []
 
-
         if request.auth.user.is_staff:
             service_tickets = ServiceTicket.objects.all()
 
@@ -35,6 +34,7 @@ class ServiceTicketView(ViewSet):
         serialized = ServiceTicketSerializer(service_tickets, many=True)
         return Response(serialized.data, status=status.HTTP_200_OK)
 
+
     def create(self, request):
         """Handle POST requests for service tickets
 
@@ -50,22 +50,6 @@ class ServiceTicketView(ViewSet):
         serialized = ServiceTicketSerializer(new_ticket, many=False)
 
         return Response(serialized.data, status=status.HTTP_201_CREATED)
-
-    def destroy(self, request, pk=None):
-        """Handle DELETE requests for Service Tickets
-
-        Returns:
-            Response: None with 204 status code
-
-        """
-        service_ticket = ServiceTicket.objects.get(pk=pk)
-        service_ticket.delete()
-
-        return Response(None, status=status.HTTP_204_NO_CONTENT)
-        
-
-
-
 
 
     def update(self, request, pk=None):
@@ -93,9 +77,6 @@ class ServiceTicketView(ViewSet):
         return Response(None, status=status.HTTP_204_NO_CONTENT)
 
         
-
-
-
     def retrieve(self, request, pk=None):
         """Handle GET requests for single customer
 
@@ -106,6 +87,19 @@ class ServiceTicketView(ViewSet):
         service_ticket = ServiceTicket.objects.get(pk=pk)
         serialized = ServiceTicketSerializer(service_ticket, context={'request': request})
         return Response(serialized.data, status=status.HTTP_200_OK)
+    
+    
+    def destroy(self, request, pk=None):
+        """Handle DELETE requests for Service Tickets
+
+        Returns:
+            Response: None with 204 status code
+
+        """
+        service_ticket = ServiceTicket.objects.get(pk=pk)
+        service_ticket.delete()
+
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
 
 
     ##### SERIALIZERS #####
